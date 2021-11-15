@@ -1,0 +1,59 @@
+<div class="weather">
+  <div class="left-panel">
+    <form [formGroup]="locationGroup" novalidate>
+      <input
+        #location
+        formControlName="location"
+        placeholder="Type city name"
+        type="text"
+        id="city"
+        name="city"
+        [required]="true"
+        class="place-input"
+      />
+      <div class="buttons-wrapper">
+        <button
+          class="add-city"
+          type="submit"
+          (click)="onSubmit(locationGroup.controls.location.value, true)"
+        >
+          Add City
+        </button>
+        <button type="button" (click)="clearWeatherData()">Clear</button>
+      </div>
+      <h2>Search History:</h2>
+      <div *ngFor="let loc of locationsList">
+        <p class="city">
+          <b>
+            <span
+              class="location-link"
+              (click)="selectedLocation(loc.location)"
+            >
+              {{ loc.location }}
+            </span>
+          </b>
+          <span>{{ loc.data }}</span>
+        </p>
+      </div>
+    </form>
+  </div>
+  <div class="right-panel" *ngIf="showData">
+    <div style="display:inline-block">
+      <div><b>Temperature:</b> {{ temperature }}C</div>
+      <div>{{ weatherDesc }}</div>
+      <div><b>Wind:</b> {{ wind }}</div>
+      <div><b>Pressure:</b> {{ pressure }}</div>
+    </div>
+    <b>Weekly Satus:</b>
+    <div class="day" id="day0"></div>
+    <div class="day" id="day1"></div>
+    <div class="day" id="day2"></div>
+    <div class="day" id="day3"></div>
+    <div class="day" id="day4"></div>
+  </div>
+</div>
+
+<div *ngIf="isError" (click)="closeError()" class="is_error">
+  <h1>404</h1>
+  <h2>Cannont find this location. click here to back on search page <--</h2>
+</div>
